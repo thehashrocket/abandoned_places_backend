@@ -3,6 +3,9 @@ type SuccessMessage {
   message: String
 }
 type Mutation {
+  createLocation(title: String, description: String, image: String, largeImage: String): Location!
+  updateLocation(id: ID!, title: String, description: String, price: Int): Location!
+  deleteLocation(id: ID!): Location
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
@@ -11,6 +14,9 @@ type Mutation {
 }
 
 type Query {
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, first: Int): [Location]!
+  location(where: LocationWhereUniqueInput!): Location
+  locationsConnection(where: LocationWhereInput): LocationConnection!
   me: User
   users: [User]!
 }

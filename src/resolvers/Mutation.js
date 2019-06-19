@@ -5,6 +5,74 @@ const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
 
 const mutations = {
+  async createLocation(parent, args, ctx, info) {
+    // TODO: Check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be lolgged in to do that!')
+    }
+
+    const location = await ctx.db.mutation.createLocation({
+      data: {
+        // This is how to create a relationship between the Location and the user.
+        user: {
+          connect: {
+            id: ctx.request.userId,
+          }
+        },
+        ...args,
+      }
+    }, info)
+
+    return location;
+
+  },
+  updateLocation(parent, args, ctx, info) {
+    // first take a copy of the updates
+    const updates = { ...args };
+    // remove the ID from the updates
+    delete updates.id;
+    // run the update method
+    return ctx.db.mutation.updateLocation({
+      data: updates,
+      where: {
+        id: args.id
+      }
+    }, info)
+  },
+
+  async deleteLocation(parent, args, ctx, info) {
+    const where = { id: args.id };
+    // find the location
+    const location = await ctx.db.query.location({ where }, `{id title}`);
+    // check if they own that location or have the permissions
+    // TODO
+    // Delete it!
+    return ctx.db.mutation.deleteLocation({ where }, info);
+  },
+  async signup(parent, args, ctx, info) {
+    // lowercase their email
+    args.email = args.email.toLowerCase();
+    // hash their password
+    const password = await bcrypt.hash(args.password, 10);
+    // create the user in the database
+    const user = await ctx.db.mutation.createUser({
+      data: {
+        ...args,
+        password,
+        permissions: { set: ['USER'] }
+      }
+    }, info);
+    // create the JWT token
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    // we set the jwt as a cookie on the response
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+    });
+    // Return user to the browser
+    return user;
+  },
+
   async signup(parent, args, ctx, info) {
     // lowercase their email
     args.email = args.email.toLowerCase();

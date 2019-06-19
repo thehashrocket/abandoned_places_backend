@@ -18,3 +18,14 @@ type User {
   createdAt: DateTime! @createdAt
 	updatedAt: DateTime! @updatedAt
 }
+
+type Location {
+	id: ID! @id
+	title: String!
+	description: String!
+	image: String
+	largeImage: String
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	user: User!
+}

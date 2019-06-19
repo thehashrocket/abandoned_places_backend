@@ -5,6 +5,10 @@ const Query = {
   //   const items = await ctx.db.query.items();
   //   return items;
   // }
+  locations: forwardTo('db'),
+  location: forwardTo('db'),
+  locationsConnection: forwardTo('db'),
+
   me(parent, args, ctx, info) {
     // check if there is a current user ID
     if (!ctx.request.userId) {
