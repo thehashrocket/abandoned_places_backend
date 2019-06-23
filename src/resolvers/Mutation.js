@@ -8,7 +8,7 @@ const mutations = {
   async createLocation(parent, args, ctx, info) {
     // TODO: Check if they are logged in
     if (!ctx.request.userId) {
-      throw new Error('You must be lolgged in to do that!')
+      throw new Error('You must be logged in to do that!')
     }
 
     const location = await ctx.db.mutation.createLocation({
