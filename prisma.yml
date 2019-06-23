@@ -1,5 +1,7 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://ap-production-b8820eb037.herokuapp.com/ap-prod/prod
 datamodel: datamodel.prisma
+# secret: ${env::PRISMA_SECRET}
 
 hooks:
   post-deploy:
