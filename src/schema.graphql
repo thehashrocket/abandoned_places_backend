@@ -15,6 +15,7 @@ type Mutation {
 }
 
 type Query {
+  hasPermissions(permissions: String): User
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, first: Int): [Location]!
   location(where: LocationWhereUniqueInput!): Location
   locationsConnection(where: LocationWhereInput): LocationConnection!
