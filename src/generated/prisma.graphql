@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/jason-shultz-beea13/abandoned-places/dev
-# timestamp: Wed Jun 19 2019 16:00:07 GMT-0600 (Mountain Daylight Time)
+# source: https://ap-production-b8820eb037.herokuapp.com/ap-prod/prod
+# timestamp: Tue Jun 25 2019 20:45:41 GMT-0600 (Mountain Daylight Time)
 
 type AggregateLocation {
   count: Int!
@@ -447,9 +447,9 @@ type PageInfo {
 enum Permission {
   ADMIN
   USER
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
+  LOCATIONCREATE
+  LOCATIONUPDATE
+  LOCATIONDELETE
   PERMISSIONUPDATE
 }
 
