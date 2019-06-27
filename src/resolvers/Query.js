@@ -19,7 +19,7 @@ const Query = {
     }, info);
   },
 
-  users(parent, args, ctx, info) {
+  async users(parent, args, ctx, info) {
     // check if they are logged in
     if (!ctx.request.userId) {
       throw new Error('You must be logged in!');
@@ -27,7 +27,7 @@ const Query = {
     // 1. Check if the user has the permissions to query all the users.
     // hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
     // 2. If they do, query all the users!
-    const users = ctx.db.query.users({}, info);
+    const users = await ctx.db.query.users({}, info);
     return users;
   },
 
