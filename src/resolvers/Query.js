@@ -1,9 +1,9 @@
 const { forwardTo } = require('prisma-binding');
 const { hasPermission } = require('../utils');
 const Query = {
-  // async items(parent, args, ctx, info) {
-  //   const items = await ctx.db.query.items();
-  //   return items;
+  // async locations(parent, args, ctx, info) {
+  //   const locations = await ctx.db.query.locations();
+  //   return locations;
   // }
   locations: forwardTo('db'),
   location: forwardTo('db'),
