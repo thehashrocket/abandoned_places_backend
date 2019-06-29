@@ -44,9 +44,15 @@ const mutations = {
   async deleteLocation(parent, args, ctx, info) {
     const where = { id: args.id };
     // find the location
-    const location = await ctx.db.query.location({ where }, `{id title}`);
+    const location = await ctx.db.query.location({ where }, `{id title user { id }}`);
     // check if they own that location or have the permissions
-    // TODO
+    const ownsLocation = location.user.id === ctx.request.userId;
+    const hasPermissions = ctx.request.user.permissions.some(
+      permissions => ['ADMIN', 'LOCATIONDELETE'].includes(permissions)
+    );
+    if (!ownsLocation || !hasPermissions) {
+      throw new Error("You don't have permissions to do that!")
+    }
     // Delete it!
     return ctx.db.mutation.deleteLocation({ where }, info);
   },
